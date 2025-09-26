@@ -36,4 +36,10 @@ public class TaskController {
         return taskService.updateTaskById(id, task);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long id)
+    {
+        return taskService.deleteTaskById(id);
+    }
+
 }

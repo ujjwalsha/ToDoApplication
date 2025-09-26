@@ -2,6 +2,7 @@ package com.ToDoApplication.ToDoApplication.Service;
 
 import com.ToDoApplication.ToDoApplication.Model.Task;
 import com.ToDoApplication.ToDoApplication.Repository.TaskRepository;
+import org.hibernate.dialect.unique.CreateTableUniqueDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,17 @@ public class TaskService {
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
 
+    }
+
+    public ResponseEntity<?> deleteTaskById(Long id) {
+
+        if(!taskRepository.existsById(id))
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        taskRepository.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -4,8 +4,8 @@ package com.ToDoApplication.ToDoApplication.Controller;
 import com.ToDoApplication.ToDoApplication.Model.Task;
 import com.ToDoApplication.ToDoApplication.Repository.TaskRepository;
 import com.ToDoApplication.ToDoApplication.Service.TaskService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +19,21 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    public String GetTasks()
+    @GetMapping("/tasks")
+    public ResponseEntity<List<Task>> GetTasks()
     {
-        List<Task> taskList = taskService.getAllTasks();
+        return taskService.getAllTasks();
+    }
+
+    @PostMapping("/Add")
+    public ResponseEntity<?> AddTasks(@RequestBody Task task){
+        return taskService.AddTasks(task);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody Task task)
+    {
+        return taskService.updateTaskById(id, task);
     }
 
 }

@@ -30,7 +30,7 @@ public class TaskService {
     public ResponseEntity<?> AddTasks(Task task) {
         Task task1 = new Task();
         task1.setTitle(task.getTitle());
-        task1.setCompleted(task.isCompleted());
+        task1.setStatus(task.getStatus());
 
         taskRepository.save(task1);
 
@@ -43,8 +43,7 @@ public class TaskService {
         Task data = taskRepository.findById(id).get();
 
         data.setTitle(task.getTitle());
-        data.setCompleted(task.isCompleted());
-
+        data.setStatus(task.getStatus());
         Task updated = taskRepository.save(data);
 
         return new ResponseEntity<>(updated, HttpStatus.OK);

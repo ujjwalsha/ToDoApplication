@@ -1,10 +1,14 @@
 package com.ToDoApplication.ToDoApplication.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import ch.qos.logback.core.status.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.annotation.Priority;
+import jakarta.persistence.*;
+import jdk.jshell.Snippet;
 import lombok.Data;
+
+import javax.management.relation.Role;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -14,6 +18,21 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private boolean completed;
+    private String status;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss")
+    private LocalDateTime createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss")
+    private LocalDateTime updatedAt;
+
+    private String priority;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
 
 }
